@@ -13,13 +13,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.unit.IntSize
 import kotlin.math.atan2
 
 @Composable
 fun Clock(
+    state: ClockState,
     pointerPosition: Offset,
     clockModifier: Modifier = Modifier
 ) {
@@ -34,7 +33,7 @@ fun Clock(
     ) {
         Canvas(
             Modifier.fillMaxSize()
-                .rotate(calcAngleFromClockToMouse(pointerPosition, location) - 90f)
+                .rotate(state.hand1)
         ) {
             val canvasWidth = size.width
             val canvasHeight = size.height
@@ -47,21 +46,4 @@ fun Clock(
             )
         }
     }
-}
-
-fun calcAngleFromClockToMouse(
-    clockCenter: Offset,
-    mousePosition: Offset
-): Float {
-    val clockCenterX = clockCenter.x
-    val clockCenterY = clockCenter.y
-    val mouseX = mousePosition.x + 6
-    val mouseY = mousePosition.y + 6
-
-    val angle = atan2(
-        y = mouseY - clockCenterY,
-        x = mouseX - clockCenterX
-    )
-
-    return (angle * 180 / Math.PI).toFloat()
 }
