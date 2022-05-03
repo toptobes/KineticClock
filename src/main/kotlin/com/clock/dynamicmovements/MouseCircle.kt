@@ -1,26 +1,22 @@
 package com.clock.dynamicmovements
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Offset
 import com.clock.clock.ClockState
 import com.clock.clock.Movement
 import kotlin.math.atan2
 
-object MouseCircle : Movement.Dynamic {
+object MouseCircle : Movement.Dynamic, Movement {
 
+    @Composable
     override fun movement(r: Int, c: Int, state: ClockState, clockCenter: Offset, pointerPosition: Offset): ClockState {
-        val clockCenterX = clockCenter.x
-        val clockCenterY = clockCenter.y
-        val mouseX = pointerPosition.x + 6
-        val mouseY = pointerPosition.y + 6
-
-        val angle = atan2(
-            y = mouseY - clockCenterY,
-            x = mouseX - clockCenterX
-        )
+        val angle = atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x)
 
         return state.copy(
-            hand1 = (angle * 180 / Math.PI).toFloat(),
-            fused = true
+            hand1 = mutableStateOf((angle * 180 / Math.PI).toFloat()),
+            hand2 = mutableStateOf((angle * 180 / Math.PI).toFloat()),
         )
     }
 }
