@@ -1,3 +1,4 @@
+/*
 package com.clock.dynamicmovements
 
 import androidx.compose.animation.core.*
@@ -28,4 +29,4 @@ object SpinAroundMouse : Movement.Dynamic, Movement {
             hand2 = rotationAnimation,
         )
     }
-}
+}*/

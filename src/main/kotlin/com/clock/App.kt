@@ -1,5 +1,9 @@
 package com.clock
 
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,10 +18,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerMoveFilter
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.clock.clock.Clock
 import com.clock.clock.ClockState
+import com.clock.clock.applyCurrentMovement
+import com.clock.clock.startMovementLoop
 
 private const val CLOCK_RADIUS = 50f
 private const val ROWS = 8
@@ -32,26 +37,24 @@ fun App() {
         startMovementLoop(cs)
     }
 
-    var pointerPosition by remember { mutableStateOf(Offset.Zero) }
+    val pointerPosition = remember { mutableStateOf(Offset.Zero) }
 
-    val clockStateMatrix = remember {
+    val clocks = rememberClockMatrix()
+    val states = rememberClockStateMatrix()
 
-        mutableStateListOf(mutableStateListOf<ClockState>()).apply {
-            for (i in 0 until 8) {
-                add(mutableStateListOf())
-                for (j in 0 until 15) {
-                    get(i).add(ClockState())
-                }
-            }
-        }
+    ClockGrid(pointerPosition) { r, c ->
+        clocks[r][c](states[r][c].applyCurrentMovement(
+            r, c, pointerPosition.value
+        ))
     }
+}
 
-    clockStateMatrix.applyCurrentMovement(
-        Offset(98f, 112f),
-        pointerPosition,
-        CLOCK_RADIUS
-    )
-
+@ExperimentalComposeUiApi
+@Composable
+fun ClockGrid(
+    pointerPosition: MutableState<Offset>,
+    clock: @Composable (r: Int, c: Int) -> Unit
+) {
     Box(
         Modifier.clip(shape = RoundedCornerShape(10.dp))
             .fillMaxSize()
@@ -65,18 +68,46 @@ fun App() {
         Column(
             Modifier.fillMaxSize()
                 .pointerMoveFilter({
-                    pointerPosition = it
+                    pointerPosition.value = it
                     true
                 }),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            repeat(ROWS) { i ->
+            repeat(ROWS) { r ->
                 Row {
-                    repeat(COLUMNS) { j ->
-                        Clock(clockStateMatrix[i][j], Modifier.requiredSize(CLOCK_RADIUS.dp))
+                    repeat(COLUMNS) { c ->
+                        clock(r, c)
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun rememberClockMatrix() = remember {
+    mutableStateListOf(mutableStateListOf<@Composable (ClockState) -> Unit>()).apply {
+        for (i in 0 until 8) {
+            add(mutableStateListOf())
+            for (j in 0 until 15) {
+                get(i).add {
+                    Clock(it)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun rememberClockStateMatrix() = remember {
+    mutableStateListOf(mutableStateListOf<ClockState>()).apply {
+        for (i in 0 until 8) {
+            add(mutableStateListOf())
+            for (j in 0 until 15) {
+                get(i).add(
+                    ClockState()
+                )
             }
         }
     }

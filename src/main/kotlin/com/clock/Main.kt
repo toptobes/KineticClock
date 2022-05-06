@@ -24,7 +24,7 @@ fun main() = application {
         title = "Kinetic Clock",
         icon = painterResource("clock_icon.png"),
         state = rememberWindowState(
-            size = DpSize(900.dp, 600.dp),
+            size = DpSize(1000.dp, 600.dp),
         )
     ) {
         Window = window

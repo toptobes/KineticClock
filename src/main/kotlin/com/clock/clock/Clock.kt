@@ -4,14 +4,16 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun Clock(
@@ -20,6 +22,7 @@ fun Clock(
 ){
     Box(
         modifier = clockModifier.clip(CircleShape)
+            .requiredSize(60.dp)
             .background(color = Color(30, 30, 30, 250))
     ) {
         Needle(state.hand1)
@@ -28,7 +31,7 @@ fun Clock(
 }
 
 @Composable
-private fun Needle(rotation: State<Float>) {
+private fun Needle(rotation: MutableState<Float>) {
     Canvas(
         Modifier.fillMaxSize().rotate(rotation.value)
     ) {
