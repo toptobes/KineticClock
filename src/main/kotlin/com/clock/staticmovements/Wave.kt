@@ -7,6 +7,12 @@ import com.clock.clock.Action
 import kotlinx.coroutines.*
 
 object Wave : Action.Static, Action {
+
+    @Composable
+    override fun setUp(r: Int, c: Int, state: ClockState): Boolean {
+        return true
+    }
+
     @Composable
     override fun start(r: Int, c: Int, state: ClockState) {
 

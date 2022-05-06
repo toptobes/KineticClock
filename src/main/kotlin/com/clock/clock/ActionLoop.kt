@@ -13,8 +13,8 @@ var currentMovement: Action = Wave
 
 fun startMovementLoop(cs: CoroutineScope) = cs.launch(Dispatchers.Default) {
     while (true) {
-        //currentMovement = Wave
-        //delay(5000)
+        currentMovement = Wave
+        delay(5000)
         currentMovement = MouseCircle
         delay(5000)
     }
@@ -28,19 +28,17 @@ fun ClockState.applyCurrentMovement(
     clockSize: Float = 60f
 ) = this.also {
     val clockCenter = Offset(rowStart.x + c * clockSize, rowStart.y + r * clockSize)
-    val pointerPosition = Offset(roughPointerPosition.x, roughPointerPosition.y)
+    val pointerPosition = Offset(roughPointerPosition.x - 40, roughPointerPosition.y - 50)
 
-    when (currentMovement) {
-        is Action.Dynamic -> {
-            (currentMovement as Action.Dynamic).start(
-                r, c, state = this, clockCenter, pointerPosition
-            )
-        }
-
-        is Action.Static -> {
-            (currentMovement as Action.Static).start(
-                r, c, state = this
-            )
-        }
+    if (currentMovement is Action.Dynamic) {
+        (currentMovement as Action.Dynamic).start(
+            r, c, state = this, clockCenter, pointerPosition
+        )
+    } else {
+        (currentMovement as Action.Static).start(
+            r, c, state = this
+        )
     }
 }
+
+
