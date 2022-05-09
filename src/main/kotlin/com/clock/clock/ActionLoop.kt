@@ -1,41 +1,49 @@
 package com.clock.clock
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
-import com.clock.dynamicmovements.MouseCircle
-import com.clock.staticmovements.Wave
+import com.clock.dynamicpattern.*
+import com.clock.staticpattern.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-var currentMovement: Action = Wave
+var currentPattern by mutableStateOf<Pattern>(DiagonalWave)
 
-fun startMovementLoop(cs: CoroutineScope) = cs.launch(Dispatchers.Default) {
+fun startPatternLoop(cs: CoroutineScope) = cs.launch(Dispatchers.Default) {
     while (true) {
-        currentMovement = Wave
-        delay(5000)
-        currentMovement = MouseCircle
-        delay(5000)
+        currentPattern = Diamonds
+        delay(2200)
+        currentPattern = Octagons
+        delay(2200)
+        currentPattern = Squares
+        delay(2200)
+        currentPattern = Horizontal
+        delay(2200)
+        currentPattern = DiagonalWave
+        delay(3000)
+        currentPattern = Circle
+        delay(3000)
     }
 }
 
 @Composable
-fun ClockState.applyCurrentMovement(
+fun ClockState.applyCurrentPattern(
     r: Int, c: Int,
     roughPointerPosition: Offset,
     rowStart: Offset = Offset(16f, 16f),
     clockSize: Float = 60f
 ) = this.also {
     val clockCenter = Offset(rowStart.x + c * clockSize, rowStart.y + r * clockSize)
-    val pointerPosition = Offset(roughPointerPosition.x - 40, roughPointerPosition.y - 50)
+    val pointerPosition = Offset(roughPointerPosition.x - 46, roughPointerPosition.y - 55)
 
-    if (currentMovement is Action.Dynamic) {
-        (currentMovement as Action.Dynamic).start(
+    if (currentPattern is Pattern.Dynamic) {
+        (currentPattern as Pattern.Dynamic).start(
             r, c, state = this, clockCenter, pointerPosition
         )
     } else {
-        (currentMovement as Action.Static).start(
+        (currentPattern as Pattern.Static).start(
             r, c, state = this
         )
     }

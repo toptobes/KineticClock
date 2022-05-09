@@ -3,7 +3,7 @@ package com.clock.clock
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 
-interface Action {
+interface Pattern {
     interface Static {
         @Composable
         fun setUp(r: Int, c: Int, state: ClockState): Boolean
