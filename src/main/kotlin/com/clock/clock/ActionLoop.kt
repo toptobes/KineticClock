@@ -19,7 +19,7 @@ fun startPatternLoop(cs: CoroutineScope) = cs.launch(Dispatchers.Default) {
         delay(2000)
         currentPattern = Squares
         delay(2000)
-        currentPattern = DiagonalWave
+        currentPattern = SlowWave
         delay(4200)
         currentPattern = Time
         delay(5000)
