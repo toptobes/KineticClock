@@ -1,12 +1,11 @@
 package com.clock.staticpattern
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.runtime.*
-import com.clock.clock.Pattern
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.clock.clock.ClockState
-import kotlinx.coroutines.launch
+import com.clock.clock.Pattern
 
 object Octagons : Pattern.Static, Pattern {
 
@@ -17,12 +16,6 @@ object Octagons : Pattern.Static, Pattern {
 
     @Composable
     override fun start(r: Int, c: Int, state: ClockState) {
-
-        val rotation1 = remember { Animatable(state.hand1.value) }
-        val rotation2 = remember { Animatable(state.hand2.value) }
-
-        val cs = rememberCoroutineScope()
-
         val target by remember {
             mutableStateOf(
                 when {
@@ -35,14 +28,6 @@ object Octagons : Pattern.Static, Pattern {
             )
         }
 
-        LaunchedEffect(Unit) {
-            cs.launch {
-                rotation1.animateTo(target, tween(1500, easing = LinearEasing))
-            }
-            rotation2.animateTo(target + 130f, tween(1500, easing = LinearEasing))
-        }
-
-        state.hand1.value = rotation1.value
-        state.hand2.value = rotation2.value
+        state.animateTo(target, target + 130f)
     }
 }

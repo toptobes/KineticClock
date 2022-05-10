@@ -9,22 +9,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-var currentPattern by mutableStateOf<Pattern>(DiagonalWave)
+var currentPattern by mutableStateOf<Pattern>(Rest)
 
 fun startPatternLoop(cs: CoroutineScope) = cs.launch(Dispatchers.Default) {
     while (true) {
         currentPattern = Diamonds
-        delay(2200)
+        delay(2000)
         currentPattern = Octagons
-        delay(2200)
+        delay(2000)
         currentPattern = Squares
-        delay(2200)
-        currentPattern = Horizontal
-        delay(2200)
+        delay(2000)
         currentPattern = DiagonalWave
-        delay(3000)
-        currentPattern = Circle
-        delay(3000)
+        delay(4200)
+        currentPattern = Time
+        delay(5000)
     }
 }
 
