@@ -1,4 +1,4 @@
-package com.clock.staticpattern
+package com.clock.staticpatterns
 
 import androidx.compose.animation.core.*
 import androidx.compose.runtime.*
@@ -15,7 +15,7 @@ object DiagonalWave : Pattern.Static, Pattern {
 
         state.animateTo(0f, spec = tween(1000, easing = LinearEasing))
 
-        if (abs(state.hand1.value - 0f) < 0.1f && abs(state.hand2.value - 0f) < 0.1f) {
+        if (abs(state.hand1 - 0f) < 0.1f && abs(state.hand2 - 0f) < 0.1f) {
             done = true
         }
 
@@ -42,7 +42,7 @@ object DiagonalWave : Pattern.Static, Pattern {
             )
         )
 
-        state.hand1.value = rotation
-        state.hand2.value = rotation
+        state.hand1 = rotation
+        state.hand2 = rotation
     }
 }

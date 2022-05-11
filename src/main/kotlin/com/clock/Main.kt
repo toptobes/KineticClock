@@ -1,9 +1,9 @@
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -22,9 +22,9 @@ import com.clock.clock.Clock
 import com.clock.clock.ClockState
 import com.clock.clock.applyCurrentPattern
 import com.clock.clock.startPatternLoop
-
-private const val ROWS = 8
-private const val COLUMNS = 15
+import com.clock.szttings.COLUMNS
+import com.clock.szttings.ROWS
+import com.clock.ui.WindowManipulationBox
 
 lateinit var Window: ComposeWindow
     private set
@@ -44,24 +44,26 @@ fun main() = application {
     ) {
         Window = window
 
+        val cs = rememberCoroutineScope()
+        LaunchedEffect(Unit) {
+            startPatternLoop(cs)
+        }
+
         WindowDraggableArea {
-            val cs = rememberCoroutineScope()
+            var enabled by remember { mutableStateOf(false) }
 
-            LaunchedEffect(Unit) {
-                startPatternLoop(cs)
-            }
-
-            val pointerPosition = remember { mutableStateOf(Offset.Zero) }
-
-            val clocks = rememberClockMatrix()
-            val states = rememberClockStateMatrix()
-
-            ClockGrid(pointerPosition) { r, c ->
-                clocks[r][c](
-                    states[r][c].applyCurrentPattern(
-                        r, c, pointerPosition.value
-                    )
-                )
+            Box(
+                Modifier.clip(shape = RoundedCornerShape(10.dp))
+                    .fillMaxSize()
+                    .background(color = Color(34, 34, 34, 255))
+                    .padding(16.dp)
+                    .pointerMoveFilter({
+                        enabled = (it.x > 824 && it.y < 76); false
+                    }),
+                contentAlignment = Alignment.Center
+            ) {
+                ClockGrid()
+                WindowManipulationBox(enabled)
             }
         }
     }
@@ -71,31 +73,28 @@ fun main() = application {
 @ExperimentalComposeUiApi
 @Composable
 fun ClockGrid(
-    pointerPosition: MutableState<Offset>,
-    clock: @Composable (r: Int, c: Int) -> Unit
+    clocks: SnapshotStateList<SnapshotStateList<@Composable (ClockState) -> Unit>> = rememberClockMatrix(),
+    states: SnapshotStateList<SnapshotStateList<ClockState>> = rememberClockStateMatrix()
 ) {
-    Box(
-        Modifier.clip(shape = RoundedCornerShape(10.dp))
-            .fillMaxSize()
-            .background(color = Color(34, 34, 34, 255))
-            .padding(16.dp)
-            .clickable { },
-        contentAlignment = Alignment.Center
+    val pointerPosition = remember { mutableStateOf(Offset.Zero) }
+
+    Column(
+        Modifier.fillMaxSize()
+            .pointerMoveFilter({
+                pointerPosition.value = it
+                true
+            }),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            Modifier.fillMaxSize()
-                .pointerMoveFilter({
-                    pointerPosition.value = it
-                    true
-                }),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            repeat(ROWS) { r ->
-                Row {
-                    repeat(COLUMNS) { c ->
-                        clock(r, c)
-                    }
+        repeat(ROWS) { r ->
+            Row {
+                repeat(COLUMNS) { c ->
+                    clocks[r][c](
+                        states[r][c].applyCurrentPattern(
+                            r, c, pointerPosition.value
+                        )
+                    )
                 }
             }
         }

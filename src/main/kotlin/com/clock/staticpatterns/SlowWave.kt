@@ -1,4 +1,4 @@
-package com.clock.staticpattern
+package com.clock.staticpatterns
 
 import androidx.compose.animation.core.*
 import androidx.compose.runtime.*
@@ -15,7 +15,7 @@ object SlowWave : Pattern.Static, Pattern {
 
         state.animateTo(45f, 225f, tween(1000, easing = LinearEasing))
 
-        if (abs(state.hand1.value - 45f) < 0.1f && abs(state.hand2.value - 225f) < 0.1f) {
+        if (abs(state.hand1 - 45f) < 0.1f && abs(state.hand2 - 225f) < 0.1f) {
             done = true
         }
 
@@ -42,7 +42,7 @@ object SlowWave : Pattern.Static, Pattern {
             )
         )
 
-        state.hand1.value = rotation + 45f
-        state.hand2.value = state.hand1.value - 180f
+        state.hand1 = rotation + 45f
+        state.hand2 = state.hand1 - 180f
     }
 }

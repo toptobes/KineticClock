@@ -1,4 +1,4 @@
-package com.clock.staticpattern
+package com.clock.staticpatterns
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

@@ -1,4 +1,4 @@
-package com.clock.staticpattern
+package com.clock.staticpatterns
 
 import androidx.compose.runtime.*
 import com.clock.clock.ClockState
@@ -22,12 +22,7 @@ object Time : Pattern.Static, Pattern {
 
         val time by remember { mutableStateOf(getTime()) }
 
-        when {
-            c < 4 -> setClockToCorrectPositionForNumber(time[0], r, c, state)
-            c < 8 -> setClockToCorrectPositionForNumber(time[1], r, c, state)
-            c < 12 -> setClockToCorrectPositionForNumber(time[2], r, c, state)
-            c < 16 -> setClockToCorrectPositionForNumber(time[3], r, c, state)
-        }
+        setClockToCorrectPositionForNumber(time[c/4], r, c, state)
     }
 
     private fun clockShouldStandBy(r: Int, c: Int) = when {

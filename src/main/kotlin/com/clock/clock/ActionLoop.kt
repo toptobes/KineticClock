@@ -2,8 +2,8 @@ package com.clock.clock
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
-import com.clock.dynamicpattern.*
-import com.clock.staticpattern.*
+import com.clock.staticpatterns.*
+import com.clock.szttings.Settings.clockSize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -30,8 +30,7 @@ fun startPatternLoop(cs: CoroutineScope) = cs.launch(Dispatchers.Default) {
 fun ClockState.applyCurrentPattern(
     r: Int, c: Int,
     roughPointerPosition: Offset,
-    rowStart: Offset = Offset(16f, 16f),
-    clockSize: Float = 60f
+    rowStart: Offset = Offset(16f, 16f)
 ) = this.also {
     val clockCenter = Offset(rowStart.x + c * clockSize, rowStart.y + r * clockSize)
     val pointerPosition = Offset(roughPointerPosition.x - 46, roughPointerPosition.y - 55)

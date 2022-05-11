@@ -1,10 +1,10 @@
-package com.clock.staticpattern
+package com.clock.staticpatterns
 
 import androidx.compose.runtime.Composable
 import com.clock.clock.ClockState
 import com.clock.clock.Pattern
 
-object Rest : Pattern.Static, Pattern {
+object Vertical : Pattern.Static, Pattern {
 
     @Composable
     override fun setUp(r: Int, c: Int, state: ClockState): Boolean {
@@ -13,6 +13,6 @@ object Rest : Pattern.Static, Pattern {
 
     @Composable
     override fun start(r: Int, c: Int, state: ClockState) {
-        state.animateTo(225f, 225f)
+        state.animateTo(90f, 270f)
     }
 }

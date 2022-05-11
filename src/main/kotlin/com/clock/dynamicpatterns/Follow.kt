@@ -1,4 +1,4 @@
-package com.clock.dynamicpattern
+package com.clock.dynamicpatterns
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -28,15 +28,15 @@ object Follow : Pattern.Dynamic, Pattern {
         }
 
         val angle by animateFloatAsState(
-            if (started) state.hand1.value.toRad() else atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x),
+            if (started) state.hand1.toRad() else atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x),
             tween(durationMillis = 120, easing = LinearEasing),
             finishedListener = {
                 done = true
             }
         )
 
-        state.hand1.value = (angle * 180f / Math.PI).toFloat() + 90f
-        state.hand2.value = state.hand1.value - 180f
+        state.hand1 = (angle * 180f / Math.PI).toFloat() + 90f
+        state.hand2 = state.hand1 - 180f
 
         started = false
         return false
@@ -57,7 +57,7 @@ object Follow : Pattern.Dynamic, Pattern {
 
         val angle = atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x)
 
-        state.hand1.value = (angle * 180 / Math.PI).toFloat() + 90f
-        state.hand2.value = state.hand1.value - 180f
+        state.hand1 = (angle * 180 / Math.PI).toFloat() + 90f
+        state.hand2 = state.hand1 - 180f
     }
 }

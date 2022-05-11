@@ -1,9 +1,8 @@
-package com.clock.dynamicpattern
+package com.clock.dynamicpatterns
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
 import com.clock.clock.Pattern
@@ -11,7 +10,7 @@ import com.clock.clock.ClockState
 import com.clock.clock.toRad
 import kotlin.math.atan2
 
-object Circle : Pattern.Dynamic, Pattern {
+object Fragmented : Pattern.Dynamic, Pattern {
 
     @Composable
     override fun setUp(
@@ -25,19 +24,19 @@ object Circle : Pattern.Dynamic, Pattern {
 
         var started by remember { mutableStateOf(true) }
         val target by remember {
-            mutableStateOf(atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x))
+            mutableStateOf(atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x) + 92f)
         }
 
         val angle by animateFloatAsState(
-            if (started) state.hand1.value.toRad() else atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x),
+            if (started) state.hand1.toRad() else atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x),
             tween(durationMillis = 120, easing = LinearEasing),
             finishedListener = {
                 done = true
             }
         )
 
-        state.hand1.value = (angle * 180f / Math.PI).toFloat()
-        state.hand2.value = state.hand1.value
+        state.hand1 = (angle * 180f / Math.PI).toFloat()
+        state.hand2 = state.hand1 - 180f
 
         started = false
         return false
@@ -56,9 +55,9 @@ object Circle : Pattern.Dynamic, Pattern {
             return
         }
 
-        val angle = atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x)
+        val angle = atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x) + 92f
 
-        state.hand1.value = (angle * 180 / Math.PI).toFloat()
-        state.hand2.value = state.hand1.value
+        state.hand1 = (angle * 180 / Math.PI).toFloat()
+        state.hand2 = state.hand1 - 180f
     }
 }
