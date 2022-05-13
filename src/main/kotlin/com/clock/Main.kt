@@ -28,6 +28,7 @@ import com.clock.ui.WindowManipulationBox
 import com.clock.ui.WindowManipulationBoxState
 import com.clock.ui.settings.SettingsBar
 import com.clock.ui.settings.SettingsBarState
+import com.clock.ui.settings.navigation.SettingsScreens
 
 lateinit var Window: ComposeWindow
     private set

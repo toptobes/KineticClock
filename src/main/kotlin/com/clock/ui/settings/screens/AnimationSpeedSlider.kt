@@ -1,17 +1,14 @@
 package com.clock.ui.settings.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
@@ -22,9 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.clock.szttings.Settings
 import com.clock.ui.settings.SettingsButton
 import com.clock.ui.settings.SettingsIcon
+import com.clock.ui.settings.navigation.SettingsScreens
 
 @Composable
-fun AnimationSpeedSlider() {
+fun AnimationSpeedSlider(enabled: MutableState<Boolean>) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -67,7 +65,7 @@ fun AnimationSpeedSlider() {
         )
 
         SettingsButton({
-
+            SettingsScreens.enabledScreen = "main"
         }) {
             SettingsIcon(painter = rememberVectorPainter(Icons.Default.ArrowBack))
         }
