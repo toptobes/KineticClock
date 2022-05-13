@@ -10,7 +10,7 @@ import kotlin.math.abs
 object SlowWave : Pattern.Static, Pattern {
 
     @Composable
-    override fun setUp(r: Int, c: Int, state: ClockState): Boolean {
+    fun setUp(r: Int, c: Int, state: ClockState): Boolean {
         var done by remember { mutableStateOf(false) }
         if (done) return true
 

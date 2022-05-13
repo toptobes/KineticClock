@@ -16,7 +16,7 @@ import kotlin.math.atan2
 object Circle : Pattern.Dynamic, Pattern {
 
     @Composable
-    override fun setUp(
+    fun setUp(
         r: Int,
         c: Int,
         state: ClockState,

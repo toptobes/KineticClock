@@ -10,11 +10,6 @@ import com.clock.szttings.Settings.asm
 object Horizontal : Pattern.Static, Pattern {
 
     @Composable
-    override fun setUp(r: Int, c: Int, state: ClockState): Boolean {
-        return true
-    }
-
-    @Composable
     override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
         if (!isRunning) return
         state.animateTo(0f, 180f, tween(1500.asm, easing = LinearEasing))

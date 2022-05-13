@@ -8,10 +8,6 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 object Time : Pattern.Static, Pattern {
-    @Composable
-    override fun setUp(r: Int, c: Int, state: ClockState): Boolean {
-        return true
-    }
 
     @Composable
     override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
