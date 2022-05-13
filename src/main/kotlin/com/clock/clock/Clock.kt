@@ -48,10 +48,5 @@ private fun Needle(rotation: MutableState<Float>) {
     }
 }
 
-fun main() {
-    readln()
-    readLine()
-}
-
 fun Float.toRad(): Float = (this * (Math.PI / 180f)).toFloat()
 fun Float.toDeg(): Float = (this * (180f / Math.PI)).toFloat()

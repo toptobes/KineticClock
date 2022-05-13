@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
 import com.clock.staticpatterns.*
 import com.clock.szttings.Settings.clockSize
+import com.clock.szttings.Settings.dm
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -14,15 +15,17 @@ var currentPattern by mutableStateOf<Pattern>(Rest)
 fun startPatternLoop(cs: CoroutineScope) = cs.launch(Dispatchers.Default) {
     while (true) {
         currentPattern = Diamonds
-        delay(2000)
+        delay(2000L.dm)
         currentPattern = Octagons
-        delay(2000)
+        delay(2000L.dm)
         currentPattern = Squares
-        delay(2000)
+        delay(2000L.dm)
+        currentPattern = DiagonalWave
+        delay(4200L.dm)
         currentPattern = SlowWave
-        delay(4200)
+        delay(4200L.dm)
         currentPattern = Time
-        delay(5000)
+        delay(5000L.dm)
     }
 }
 

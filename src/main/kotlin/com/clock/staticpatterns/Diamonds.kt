@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.clock.clock.ClockState
 import com.clock.clock.Pattern
+import com.clock.szttings.Settings.asm
 
 object Diamonds : Pattern.Static, Pattern {
 
@@ -28,6 +29,6 @@ object Diamonds : Pattern.Static, Pattern {
             }
         ) }
 
-        state.animateTo(target, target + 180f, tween(1500, easing = LinearEasing))
+        state.animateTo(target, target + 180f, tween(1500.asm, easing = LinearEasing))
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.*
+import com.clock.szttings.Settings.asm
 import kotlinx.coroutines.launch
 
 data class ClockState(
@@ -18,7 +19,7 @@ data class ClockState(
     fun animateTo(
         angle1: Float,
         angle2: Float = angle1,
-        spec: AnimationSpec<Float> = tween(1500, easing = LinearEasing)
+        spec: AnimationSpec<Float> = tween(1500.asm, easing = LinearEasing)
     ) {
         val rotation1 = remember { Animatable(hand1) }
         val rotation2 = remember { Animatable(hand2) }

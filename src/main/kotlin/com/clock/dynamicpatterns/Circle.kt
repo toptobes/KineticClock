@@ -8,7 +8,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
 import com.clock.clock.Pattern
 import com.clock.clock.ClockState
+import com.clock.clock.toDeg
 import com.clock.clock.toRad
+import com.clock.szttings.Settings.asm
 import kotlin.math.atan2
 
 object Circle : Pattern.Dynamic, Pattern {
@@ -29,14 +31,14 @@ object Circle : Pattern.Dynamic, Pattern {
         }
 
         val angle by animateFloatAsState(
-            if (started) state.hand1.toRad() else atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x),
-            tween(durationMillis = 120, easing = LinearEasing),
+            if (started) state.hand1.toRad() else target,
+            tween(durationMillis = 120.asm, easing = LinearEasing),
             finishedListener = {
                 done = true
             }
         )
 
-        state.hand1 = (angle * 180f / Math.PI).toFloat()
+        state.hand1 = angle.toDeg()
         state.hand2 = state.hand1
 
         started = false
@@ -58,7 +60,7 @@ object Circle : Pattern.Dynamic, Pattern {
 
         val angle = atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x)
 
-        state.hand1 = (angle * 180 / Math.PI).toFloat()
+        state.hand1 = angle.toDeg()
         state.hand2 = state.hand1
     }
 }

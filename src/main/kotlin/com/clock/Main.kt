@@ -22,8 +22,8 @@ import com.clock.clock.Clock
 import com.clock.clock.ClockState
 import com.clock.clock.applyCurrentPattern
 import com.clock.clock.startPatternLoop
-import com.clock.szttings.COLUMNS
-import com.clock.szttings.ROWS
+import com.clock.szttings.Settings.COLUMNS
+import com.clock.szttings.Settings.ROWS
 import com.clock.ui.WindowManipulationBox
 
 lateinit var Window: ComposeWindow
@@ -81,8 +81,7 @@ fun ClockGrid(
     Column(
         Modifier.fillMaxSize()
             .pointerMoveFilter({
-                pointerPosition.value = it
-                true
+                pointerPosition.value = it; true
             }),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

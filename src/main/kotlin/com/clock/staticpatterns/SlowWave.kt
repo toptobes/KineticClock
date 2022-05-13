@@ -4,6 +4,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.runtime.*
 import com.clock.clock.ClockState
 import com.clock.clock.Pattern
+import com.clock.szttings.Settings.asm
 import kotlin.math.abs
 
 object SlowWave : Pattern.Static, Pattern {
@@ -13,7 +14,7 @@ object SlowWave : Pattern.Static, Pattern {
         var done by remember { mutableStateOf(false) }
         if (done) return true
 
-        state.animateTo(45f, 225f, tween(1000, easing = LinearEasing))
+        state.animateTo(45f, 225f, tween(1000.asm, easing = LinearEasing))
 
         if (abs(state.hand1 - 45f) < 0.1f && abs(state.hand2 - 225f) < 0.1f) {
             done = true
@@ -36,7 +37,7 @@ object SlowWave : Pattern.Static, Pattern {
             0f,
             360f,
             animationSpec = infiniteRepeatable(
-                animation = tween(4000, easing = LinearEasing),
+                animation = tween(4000.asm, easing = LinearEasing),
                 repeatMode = RepeatMode.Restart,
                 initialStartOffset = StartOffset(c * 70 + r * 70)
             )
