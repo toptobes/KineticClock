@@ -14,9 +14,11 @@ object Time : Pattern.Static, Pattern {
     }
 
     @Composable
-    override fun start(r: Int, c: Int, state: ClockState) {
+    override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
+        if (!isRunning) return
+
         if (clockShouldStandBy(r, c)) {
-            Rest.start(r, c, state)
+            Rest.start(r, c, state, true)
             return
         }
 
@@ -49,7 +51,7 @@ object Time : Pattern.Static, Pattern {
             '7' -> ClockNumberPositioner.seven(r, c, state)
             '8' -> ClockNumberPositioner.eight(r, c, state)
             '9' -> ClockNumberPositioner.nine(r, c, state)
-            else -> Rest.start(r, c, state)
+            else -> Rest.start(r, c, state, true)
         }
     }
 
@@ -58,22 +60,22 @@ object Time : Pattern.Static, Pattern {
         fun zero(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
                 r == 6 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
-                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(270f, 0f)
 
-                r in 2..5 -> Horizontal.start(r, c, state)
+                r in 2..5 -> Horizontal.start(r, c, state, true)
             }
         }
 
         @Composable
         fun one(r: Int, c: Int, state: ClockState) {
             when {
-                (c + 1) % 4 == 1 -> Rest.start(r, c, state)
-                r in 2..5 -> Horizontal.start(r, c, state)
+                (c + 1) % 4 == 1 -> Rest.start(r, c, state, true)
+                r in 2..5 -> Horizontal.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 2 -> state.animateTo(90f, 180f)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(270f, 0f)
@@ -85,16 +87,16 @@ object Time : Pattern.Static, Pattern {
         fun two(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
                 r == 2 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
                 r == 2 && (c + 1) % 4 == 2 -> state.animateTo(270f, 180f)
-                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 3 && (c + 1) % 4 == 1 -> state.animateTo(180f, 90f)
                 r == 3 && (c + 1) % 4 == 2 -> state.animateTo(270f, 0f)
-                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 4 && (c + 1) % 4 == 1 -> state.animateTo(0f, 180f)
                 r == 4 && (c + 1) % 4 == 2 -> state.animateTo(180f, 90f)
@@ -105,7 +107,7 @@ object Time : Pattern.Static, Pattern {
                 r == 5 && (c + 1) % 4 == 3 -> state.animateTo(270f, 180f)
 
                 r == 6 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
-                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
             }
         }
@@ -114,27 +116,27 @@ object Time : Pattern.Static, Pattern {
         fun three(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
                 r == 2 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
                 r == 2 && (c + 1) % 4 == 2 -> state.animateTo(270f, 180f)
-                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 3 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
                 r == 3 && (c + 1) % 4 == 2 -> state.animateTo(0f, 270f)
-                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 4 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
                 r == 4 && (c + 1) % 4 == 2 -> state.animateTo(270f, 180f)
-                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 5 && (c + 1) % 4 == 1 -> state.animateTo(180f, 90f)
                 r == 5 && (c + 1) % 4 == 2 -> state.animateTo(270f, 0f)
-                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 6 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
-                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
             }
         }
@@ -146,21 +148,21 @@ object Time : Pattern.Static, Pattern {
                 r == 1 && (c + 1) % 4 == 2 -> state.animateTo(180f, 270f)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
-                r == 2 -> Horizontal.start(r, c, state)
+                r == 2 -> Horizontal.start(r, c, state, true)
 
-                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 3 && (c + 1) % 4 == 2 -> state.animateTo(0f, 90f)
-                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 4 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
                 r == 4 && (c + 1) % 4 == 2 -> state.animateTo(180f, 270f)
-                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
-                r == 5 && (c + 1) % 4 == 1 -> Rest.start(r, c, state)
-                r == 5 && (c + 1) % 4 == 2 -> Horizontal.start(r, c, state)
-                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 5 && (c + 1) % 4 == 1 -> Rest.start(r, c, state, true)
+                r == 5 && (c + 1) % 4 == 2 -> Horizontal.start(r, c, state, true)
+                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
-                r == 6 && (c + 1) % 4 == 1 -> Rest.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 1 -> Rest.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 2 -> state.animateTo(0f, 90f)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
             }
@@ -170,27 +172,27 @@ object Time : Pattern.Static, Pattern {
         fun five(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
-                r == 2 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 2 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 2 && (c + 1) % 4 == 2 -> state.animateTo(90f, 180f)
                 r == 2 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
 
-                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 3 && (c + 1) % 4 == 2 -> state.animateTo(0f, 90f)
                 r == 3 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
                 r == 4 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
                 r == 4 && (c + 1) % 4 == 2 -> state.animateTo(180f, 270f)
-                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 5 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
                 r == 5 && (c + 1) % 4 == 2 -> state.animateTo(0f, 270f)
-                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 6 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
-                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
             }
         }
@@ -199,27 +201,27 @@ object Time : Pattern.Static, Pattern {
         fun six(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
-                r == 2 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 2 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 2 && (c + 1) % 4 == 2 -> state.animateTo(90f, 180f)
                 r == 2 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
 
-                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 3 && (c + 1) % 4 == 2 -> state.animateTo(0f, 90f)
                 r == 3 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
-                r == 4 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 4 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 4 && (c + 1) % 4 == 2 -> state.animateTo(180f)
-                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
-                r == 5 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 5 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 5 && (c + 1) % 4 == 2 -> state.animateTo(0f)
-                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 6 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
-                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
             }
         }
@@ -228,18 +230,18 @@ object Time : Pattern.Static, Pattern {
         fun seven(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
                 r == 2 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
                 r == 2 && (c + 1) % 4 == 2 -> state.animateTo(270f, 180f)
-                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
-                r in 3..5 && (c + 1) % 4 == 1 -> Rest.start(r, c, state)
-                r in 3..5 && (c + 1) % 4 == 2 -> Horizontal.start(r, c, state)
-                r in 3..5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r in 3..5 && (c + 1) % 4 == 1 -> Rest.start(r, c, state, true)
+                r in 3..5 && (c + 1) % 4 == 2 -> Horizontal.start(r, c, state, true)
+                r in 3..5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
-                r == 6 && (c + 1) % 4 == 1 -> Rest.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 1 -> Rest.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 2 -> state.animateTo(0f, 90f)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
             }
@@ -249,11 +251,11 @@ object Time : Pattern.Static, Pattern {
         fun eight(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
                 r == 6 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
-                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(270f, 0f)
 
                 r == 2 && (c + 1) % 4 == 2 -> state.animateTo(180f)
@@ -261,7 +263,7 @@ object Time : Pattern.Static, Pattern {
                 r == 4 && (c + 1) % 4 == 2 -> state.animateTo(180f)
                 r == 5 && (c + 1) % 4 == 2 -> state.animateTo(0f)
 
-                r in 2..5 -> Horizontal.start(r, c, state)
+                r in 2..5 -> Horizontal.start(r, c, state, true)
             }
         }
 
@@ -269,27 +271,27 @@ object Time : Pattern.Static, Pattern {
         fun nine(r: Int, c: Int, state: ClockState) {
             when {
                 r == 1 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
-                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 1 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 1 && (c + 1) % 4 == 3 -> state.animateTo(180f, 270f)
 
-                r == 2 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 2 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 2 && (c + 1) % 4 == 2 -> state.animateTo(180f)
-                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 2 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
-                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 1 -> Horizontal.start(r, c, state, true)
                 r == 3 && (c + 1) % 4 == 2 -> state.animateTo(0f)
-                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 3 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 4 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
                 r == 4 && (c + 1) % 4 == 2 -> state.animateTo(180f, 270f)
-                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 4 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 5 && (c + 1) % 4 == 1 -> state.animateTo(90f, 180f)
                 r == 5 && (c + 1) % 4 == 2 -> state.animateTo(0f, 270f)
-                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state)
+                r == 5 && (c + 1) % 4 == 3 -> Horizontal.start(r, c, state, true)
 
                 r == 6 && (c + 1) % 4 == 1 -> state.animateTo(0f, 90f)
-                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state)
+                r == 6 && (c + 1) % 4 == 2 -> Vertical.start(r, c, state, true)
                 r == 6 && (c + 1) % 4 == 3 -> state.animateTo(0f, 270f)
             }
         }

@@ -15,7 +15,8 @@ object Horizontal : Pattern.Static, Pattern {
     }
 
     @Composable
-    override fun start(r: Int, c: Int, state: ClockState) {
+    override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
+        if (!isRunning) return
         state.animateTo(0f, 180f, tween(1500.asm, easing = LinearEasing))
     }
 }

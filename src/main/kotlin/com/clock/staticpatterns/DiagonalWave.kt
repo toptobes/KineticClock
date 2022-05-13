@@ -24,7 +24,8 @@ object DiagonalWave : Pattern.Static, Pattern {
     }
 
     @Composable
-    override fun start(r: Int, c: Int, state: ClockState) {
+    override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
+        if (!isRunning) return
 
         var done by remember { mutableStateOf(false) }
         if (!done) {

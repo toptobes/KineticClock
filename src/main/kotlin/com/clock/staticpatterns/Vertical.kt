@@ -12,7 +12,8 @@ object Vertical : Pattern.Static, Pattern {
     }
 
     @Composable
-    override fun start(r: Int, c: Int, state: ClockState) {
+    override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
+        if (!isRunning) return
         state.animateTo(90f, 270f)
     }
 }

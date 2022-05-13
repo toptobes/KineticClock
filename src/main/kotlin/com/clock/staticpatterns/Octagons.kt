@@ -15,7 +15,9 @@ object Octagons : Pattern.Static, Pattern {
     }
 
     @Composable
-    override fun start(r: Int, c: Int, state: ClockState) {
+    override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
+        if (!isRunning) return
+
         val target by remember {
             mutableStateOf(
                 when {

@@ -1,6 +1,8 @@
 package com.clock.ui
 
 import Window
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -21,12 +23,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlin.system.exitProcess
 
+object WindowManipulationBoxState {
+    var isOpen by mutableStateOf(false)
+}
+
 @Suppress("WrapUnaryOperator")
 @Composable
-fun BoxScope.WindowManipulationBox(enabled: Boolean) {
-
-    val offset by animateOffsetAsState(
-        targetValue = if (enabled) Offset.Zero else Offset(0f, -100f),
+fun BoxScope.WindowManipulationBox() {
+    val yOffset by animateDpAsState(
+        targetValue = if (WindowManipulationBoxState.isOpen) 0.dp else -100.dp,
         animationSpec = tween(300)
     )
 
@@ -39,9 +44,9 @@ fun BoxScope.WindowManipulationBox(enabled: Boolean) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .offset(-10.dp, offset.y.dp + 10.dp)
+                .offset(-10.dp, yOffset + 10.dp)
                 .clip(RoundedCornerShape(10.dp))
-                .background(color = Color.DarkGray),
+                .background(Color.DarkGray),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {

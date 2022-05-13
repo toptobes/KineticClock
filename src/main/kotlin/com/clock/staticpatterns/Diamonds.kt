@@ -18,7 +18,9 @@ object Diamonds : Pattern.Static, Pattern {
     }
 
     @Composable
-    override fun start(r: Int, c: Int, state: ClockState) {
+    override fun start(r: Int, c: Int, state: ClockState, isRunning: Boolean) {
+        if (!isRunning) return
+
         val target by remember { mutableStateOf(
             when {
                 r % 2 == 0 && c % 2 == 0 -> 45f

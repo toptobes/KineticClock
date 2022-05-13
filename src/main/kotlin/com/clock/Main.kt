@@ -18,13 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.clock.clock.Clock
-import com.clock.clock.ClockState
-import com.clock.clock.applyCurrentPattern
-import com.clock.clock.startPatternLoop
+import com.clock.clock.*
+import com.clock.clock.PatternLoop.applyCurrentPattern
 import com.clock.szttings.Settings.COLUMNS
 import com.clock.szttings.Settings.ROWS
 import com.clock.ui.WindowManipulationBox
+import com.clock.ui.WindowManipulationBoxState
+import com.clock.ui.settings.SettingsBar
+import com.clock.ui.settings.SettingsBarState
 
 lateinit var Window: ComposeWindow
     private set
@@ -46,24 +47,25 @@ fun main() = application {
 
         val cs = rememberCoroutineScope()
         LaunchedEffect(Unit) {
-            startPatternLoop(cs)
+            PatternLoop.start(cs)
         }
 
         WindowDraggableArea {
-            var enabled by remember { mutableStateOf(false) }
-
             Box(
                 Modifier.clip(shape = RoundedCornerShape(10.dp))
                     .fillMaxSize()
                     .background(color = Color(34, 34, 34, 255))
                     .padding(16.dp)
                     .pointerMoveFilter({
-                        enabled = (it.x > 824 && it.y < 76); false
+                        WindowManipulationBoxState.isOpen = (it.x > 824 && it.y < 76)
+                        SettingsBarState.isOpen = (it.x < 80)
+                        false
                     }),
                 contentAlignment = Alignment.Center
             ) {
                 ClockGrid()
-                WindowManipulationBox(enabled)
+                WindowManipulationBox()
+                SettingsBar()
             }
         }
     }

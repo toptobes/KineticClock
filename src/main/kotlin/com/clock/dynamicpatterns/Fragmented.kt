@@ -18,7 +18,7 @@ object Fragmented : Pattern.Dynamic, Pattern {
     override fun setUp(
         r: Int, c: Int,
         state: ClockState,
-        clockCenter: Offset,
+        center: Offset,
         pointerPosition: Offset
     ): Boolean {
         var done by remember { mutableStateOf(false) }
@@ -26,7 +26,7 @@ object Fragmented : Pattern.Dynamic, Pattern {
 
         var started by remember { mutableStateOf(true) }
         val target by remember {
-            mutableStateOf(atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x) + 92f)
+            mutableStateOf(atan2(pointerPosition.y - center.y, pointerPosition.x - center.x) + 92f)
         }
 
         val angle by animateFloatAsState(
@@ -46,18 +46,22 @@ object Fragmented : Pattern.Dynamic, Pattern {
 
     @Composable
     override fun start(
-        r: Int, c: Int,
+        r: Int,
+        c: Int,
         state: ClockState,
-        clockCenter: Offset,
-        pointerPosition: Offset
+        center: Offset,
+        pointerPosition: Offset,
+        isRunning: Boolean
     ) {
+        if (!isRunning) return
+
         var done by remember { mutableStateOf(false) }
         if (!done) {
-            done = setUp(r, c, state, clockCenter, pointerPosition)
+            done = setUp(r, c, state, center, pointerPosition)
             return
         }
 
-        val angle = atan2(pointerPosition.y - clockCenter.y, pointerPosition.x - clockCenter.x) + 92f
+        val angle = atan2(pointerPosition.y - center.y, pointerPosition.x - center.x) + 92f
 
         state.hand1 = angle.toDeg()
         state.hand2 = state.hand1 - 180f
