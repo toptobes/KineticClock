@@ -1,23 +1,25 @@
 package com.clock.ui.settings.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+import com.clock.ui.settings.screens.AlphaMulti
+import com.clock.ui.settings.screens.AnimationDurationSlider
 import com.clock.ui.settings.screens.Settings
 import com.clock.ui.settings.screens.AnimationSpeedSlider
 
 object SettingsScreens {
-    val screens = LinkedHashMap<String, @Composable (MutableState<Boolean>) -> Unit>().also {
-        it["main"] = { Settings(it) }
-        it["animation_speed"] = { AnimationSpeedSlider(it) }
-    }
+    val screens = mapOf<String, @Composable (Boolean) -> Unit>(
+        "main" to { Settings(it) },
+        "animation_speed" to { AnimationSpeedSlider(it) },
+        "animation_duration" to { AnimationDurationSlider(it) },
+        "alpha_multi" to { AlphaMulti(it) },
+    )
 
-    var enabledScreen = "main"
+    var enabledScreen by mutableStateOf("main")
 
     @Composable
-    fun displayScreens() {
+    fun DisplayAll() {
         for ((id, screen) in screens) {
-            screen(mutableStateOf(id == enabledScreen))
+            screen(id == enabledScreen)
         }
     }
 }

@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import com.clock.ui.settings.navigation.SettingsScreens
-import com.clock.ui.settings.screens.AnimationSpeedSlider
 
 object SettingsBarState {
     var isOpen by mutableStateOf(false)
@@ -32,7 +31,7 @@ fun BoxScope.SettingsBar() {
         animationSpec = tween(300)
     )
 
-    Column(
+    Box(
         Modifier.fillMaxHeight()
             .absoluteOffset(xOffset)
             .width(60.dp)
@@ -40,11 +39,12 @@ fun BoxScope.SettingsBar() {
             .background(Color(34, 34, 34, 255))
             .border(BorderStroke(10.dp, Color.DarkGray))
             .align(Alignment.CenterStart),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly,
+        Alignment.Center
     ) {
-        SettingsScreens.displayScreens()
+        SettingsScreens.DisplayAll()
     }
+
+    SettingsText.Text()
 }
 
 @Composable

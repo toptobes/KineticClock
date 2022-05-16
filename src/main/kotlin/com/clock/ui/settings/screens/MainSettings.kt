@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -18,19 +15,19 @@ import androidx.compose.ui.unit.dp
 import com.clock.clock.PatternLoop
 import com.clock.ui.settings.SettingsButton
 import com.clock.ui.settings.SettingsIcon
+import com.clock.ui.settings.SettingsText
 import com.clock.ui.settings.navigation.SettingsScreens
 
 @Composable
-fun Settings(enabled: MutableState<Boolean>) {
+fun Settings(enabled: Boolean) {
     val cs = rememberCoroutineScope()
 
     val yOffset by animateFloatAsState(
-        if (enabled.value) 0f else 500f,
+        if (enabled) 0f else 550f,
         tween(durationMillis = 2000)
     )
 
-    println("enabled: ${enabled.value}")
-    println("yOffset: $yOffset")
+    if (enabled && yOffset < 50) SettingsText.text = ""
 
     Column(
         Modifier.fillMaxSize()
@@ -60,11 +57,15 @@ fun Settings(enabled: MutableState<Boolean>) {
             SettingsIcon(painter = painterResource("speedometer.png"))
         }
 
-        SettingsButton({}) {
+        SettingsButton({
+            SettingsScreens.enabledScreen = "animation_duration"
+        }) {
             SettingsIcon(painter = painterResource("timer.png"))
         }
 
-        SettingsButton({}) {
+        SettingsButton({
+            SettingsScreens.enabledScreen = "alpha_multi"
+        }) {
             SettingsIcon(painter = painterResource("circle-opacity.png"))
         }
     }

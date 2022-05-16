@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposeWindow
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -22,13 +23,13 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.clock.clock.*
 import com.clock.clock.PatternLoop.applyCurrentPattern
+import com.clock.szttings.Settings
 import com.clock.szttings.Settings.COLUMNS
 import com.clock.szttings.Settings.ROWS
 import com.clock.ui.WindowManipulationBox
 import com.clock.ui.WindowManipulationBoxState
 import com.clock.ui.settings.SettingsBar
 import com.clock.ui.settings.SettingsBarState
-import com.clock.ui.settings.navigation.SettingsScreens
 
 lateinit var Window: ComposeWindow
     private set
@@ -56,6 +57,7 @@ fun main() = application {
         WindowDraggableArea {
             Box(
                 Modifier.clip(shape = RoundedCornerShape(10.dp))
+                    .alpha(Settings.alphaMulti)
                     .fillMaxSize()
                     .background(color = Color(34, 34, 34, 255))
                     .padding(16.dp)

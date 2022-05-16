@@ -25,14 +25,14 @@ import com.clock.ui.settings.SettingsText
 import com.clock.ui.settings.navigation.SettingsScreens
 
 @Composable
-fun AnimationSpeedSlider(enabled: Boolean) {
+fun AnimationDurationSlider(enabled: Boolean) {
 
     val yOffset by animateFloatAsState(
         if (enabled) 0f else -600f,
         tween(durationMillis = 2000)
     )
 
-    if (enabled && yOffset > -50) SettingsText.text = String.format("%.1fx", 1 / Settings.animationSpeedMulti)
+    if (enabled && yOffset > -50) SettingsText.text = String.format("%.1fx", Settings.durationMulti)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -62,9 +62,9 @@ fun AnimationSpeedSlider(enabled: Boolean) {
                 .height(50.dp)
                 .absolutePadding(right = 16.dp)
                 .absoluteOffset(y = -yOffset.dp),
-            value = Settings.animationSpeedMulti,
+            value = com.clock.szttings.Settings.durationMulti,
             onValueChange = {
-                Settings.animationSpeedMulti = it
+                com.clock.szttings.Settings.durationMulti = it
             },
             valueRange = .25f..2f,
             colors = SliderDefaults.colors(

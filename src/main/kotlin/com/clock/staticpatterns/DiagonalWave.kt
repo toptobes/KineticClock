@@ -5,6 +5,7 @@ import androidx.compose.runtime.*
 import com.clock.clock.ClockState
 import com.clock.clock.Pattern
 import com.clock.szttings.Settings.asm
+import com.clock.szttings.Settings.dm
 import kotlin.math.abs
 
 object DiagonalWave : Pattern.Static, Pattern {
@@ -40,7 +41,7 @@ object DiagonalWave : Pattern.Static, Pattern {
             animationSpec = infiniteRepeatable(
                 animation = tween(1333.asm, easing = LinearEasing),
                 repeatMode = RepeatMode.Restart,
-                initialStartOffset = StartOffset(c * 70 + r * 70)
+                initialStartOffset = StartOffset(c * 70.dm + r * 70.dm)
             )
         )
 

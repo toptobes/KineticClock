@@ -13,6 +13,7 @@ object Settings {
     var clockSizeMulti by mutableStateOf(1f)
     var animationSpeedMulti by mutableStateOf(1f)
     var durationMulti by mutableStateOf(1f)
+    var alphaMulti by mutableStateOf(1f)
 
     val clockSize
         get() = 60f * clockSizeMulti
@@ -22,4 +23,10 @@ object Settings {
 
     val Long.dm
         get() = (this * durationMulti).roundToLong()
+
+    val Int.dm
+        get() = (this * durationMulti).roundToInt()
+
+    val Float.am
+        get() = this * alphaMulti
 }
