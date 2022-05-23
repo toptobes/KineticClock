@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.clock.szttings.Settings
+import com.clock.szttings.Settings.am
 import com.clock.ui.settings.SettingsButton
 import com.clock.ui.settings.SettingsIcon
 import com.clock.ui.settings.SettingsText
@@ -68,9 +69,9 @@ fun AlphaMulti(enabled: Boolean) {
             },
             valueRange = .01f..1f,
             colors = SliderDefaults.colors(
-                thumbColor = Color.White.copy(alpha = .8f),
-                activeTrackColor = Color.Black.copy(alpha = .8f),
-                inactiveTrackColor = Color.Black.copy(alpha = .6f),
+                thumbColor = Color.White.copy(alpha = .8f).am,
+                activeTrackColor = Color.Black.copy(alpha = .8f).am,
+                inactiveTrackColor = Color.Black.copy(alpha = .6f).am,
                 activeTickColor = Color.Transparent,
                 inactiveTickColor = Color.Transparent,
             )

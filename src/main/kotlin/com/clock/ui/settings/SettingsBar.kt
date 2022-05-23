@@ -13,11 +13,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import com.clock.Window
+import com.clock.szttings.Settings.am
 import com.clock.ui.settings.navigation.SettingsScreens
+import kotlin.math.min
 
 object SettingsBarState {
     var isOpen by mutableStateOf(false)
@@ -36,9 +40,12 @@ fun BoxScope.SettingsBar() {
             .absoluteOffset(xOffset)
             .width(60.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color(34, 34, 34, 255))
-            .border(BorderStroke(10.dp, Color.DarkGray))
-            .align(Alignment.CenterStart),
+            .background(Color(34, 34, 34, 255).am)
+            .border(BorderStroke(10.dp, Color.DarkGray.am))
+            .align(Alignment.CenterStart)
+            .scale(
+                min(Window.width / 1000f, Window.height / 600f)
+            ),
         Alignment.Center
     ) {
         SettingsScreens.DisplayAll()
@@ -55,8 +62,8 @@ fun SettingsButton(
     elevation: ButtonElevation? = null,
     shape: Shape = CircleShape,
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        backgroundColor = Color.DarkGray,
-        contentColor = Color.White.copy(alpha = 0.8f),
+        backgroundColor = Color.DarkGray.am,
+        contentColor = Color.White.copy(alpha = 0.8f).am,
     ),
     content: @Composable RowScope.() -> Unit
 ) = Button(
@@ -73,7 +80,7 @@ fun SettingsButton(
 fun SettingsIcon(
     painter: Painter,
     modifier: Modifier = Modifier.requiredSize(35.dp),
-    tint: Color = Color.White
+    tint: Color = Color.White.am
 ) = Icon(
     painter = painter,
     contentDescription = null,

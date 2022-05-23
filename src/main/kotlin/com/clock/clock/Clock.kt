@@ -14,21 +14,22 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.clock.szttings.Settings.am
 import com.clock.szttings.Settings.clockSize
 
 @Composable
 fun Clock(
     state: ClockState,
     clockModifier: Modifier = Modifier
+) = Box(
+    modifier = clockModifier.clip(CircleShape)
+        .requiredSize(clockSize.value.dp)
+        .background(color = Color(30, 30, 30, 250).am)
 ) {
-    Box(
-        modifier = clockModifier.clip(CircleShape)
-            .requiredSize(clockSize.dp)
-            .background(color = Color(30, 30, 30, 250))
-    ) {
-        Needle(state._hand1)
-        Needle(state._hand2)
-    }
+    Needle(state._hand1)
+    Needle(state._hand2)
+}.also {
+    println(clockSize.value)
 }
 
 @Composable

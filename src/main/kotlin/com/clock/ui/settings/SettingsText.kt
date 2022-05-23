@@ -14,6 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.clock.Window
+import com.clock.szttings.Settings.am
 
 object SettingsText {
     var text by mutableStateOf("")
@@ -28,7 +29,7 @@ object SettingsText {
             Text(
                 text = SettingsText.text,
                 style = TextStyle(
-                    color = Color.White,
+                    color = Color.White.am,
                     fontSize = 18.sp,
                 ),
                 modifier = Modifier.alpha(.8f)

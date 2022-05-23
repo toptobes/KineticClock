@@ -58,7 +58,7 @@ object PatternLoop {
         roughPointerPosition: Offset,
         rowStart: Offset = Offset(16f, 16f)
     ) = this.also {
-        val clockCenter = Offset(rowStart.x + c * clockSize, rowStart.y + r * clockSize)
+        val clockCenter = Offset(rowStart.x + c * clockSize.value, rowStart.y + r * clockSize.value)
         val pointerPosition = Offset(roughPointerPosition.x - 46, roughPointerPosition.y - 55)
 
         if (currentPattern is Pattern.Dynamic) {

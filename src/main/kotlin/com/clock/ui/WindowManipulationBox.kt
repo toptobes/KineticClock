@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.clock.szttings.Settings.am
 import kotlin.system.exitProcess
 
 object WindowManipulationBoxState {
@@ -43,22 +44,22 @@ fun BoxScope.WindowManipulationBox() {
                 .fillMaxSize()
                 .offset(-10.dp, yOffset + 10.dp)
                 .clip(RoundedCornerShape(10.dp))
-                .background(Color.DarkGray),
+                .background(Color.DarkGray.am),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             var greenButtonAlpha by rememberSaveable { mutableStateOf(140) }
 
-            TitleBarButton(Color(34, 197, 94, greenButtonAlpha)) {
+            TitleBarButton(Color(34, 197, 94, greenButtonAlpha).am) {
                 Window.isAlwaysOnTop = !Window.isAlwaysOnTop
                 greenButtonAlpha = if (Window.isAlwaysOnTop) 200 else 140
             }
 
-            TitleBarButton(Color(251, 191, 36, 140)) {
+            TitleBarButton(Color(251, 191, 36, 140).am) {
                 Window.isMinimized = true
             }
 
-            TitleBarButton(Color(190, 18, 60, 140)) {
+            TitleBarButton(Color(190, 18, 60, 140).am) {
                 exitProcess(0)
             }
         }
@@ -71,7 +72,7 @@ private fun TitleBarButton(color: Color, onClick: () -> Unit) = Button(
         onClick()
     },
     colors = ButtonDefaults.buttonColors(
-        backgroundColor = color,
+        backgroundColor = color.am,
     ),
     modifier = Modifier.size(30.dp),
     elevation = null,

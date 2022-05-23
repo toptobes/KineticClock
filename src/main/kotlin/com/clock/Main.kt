@@ -26,6 +26,7 @@ import com.clock.clock.PatternLoop.applyCurrentPattern
 import com.clock.szttings.Settings
 import com.clock.szttings.Settings.COLUMNS
 import com.clock.szttings.Settings.ROWS
+import com.clock.szttings.Settings.am
 import com.clock.ui.WindowManipulationBox
 import com.clock.ui.WindowManipulationBoxState
 import com.clock.ui.settings.SettingsBar
@@ -40,7 +41,6 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         undecorated = true,
         transparent = true,
-        resizable = false,
         title = "Kinetic Clock",
         icon = painterResource("clock_icon.png"),
         state = rememberWindowState(
@@ -57,12 +57,10 @@ fun main() = application {
         WindowDraggableArea {
             Box(
                 Modifier.clip(shape = RoundedCornerShape(10.dp))
-                    .alpha(Settings.alphaMulti)
-                    .fillMaxSize()
-                    .background(color = Color(34, 34, 34, 255))
+                    .background(color = Color(34, 34, 34, 255).am)
                     .padding(16.dp)
                     .pointerMoveFilter({
-                        WindowManipulationBoxState.isOpen = (it.x > 824 && it.y < 76)
+                        WindowManipulationBoxState.isOpen = (it.x > Window.width - 176 && it.y < 76)
                         SettingsBarState.isOpen = (it.x < 80)
                         false
                     }),
