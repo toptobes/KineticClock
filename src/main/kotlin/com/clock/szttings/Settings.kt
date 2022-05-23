@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import com.clock.Window
-import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
@@ -19,7 +18,11 @@ object Settings {
 
     var clockSize = mutableStateOf(0f)
         get() {
-            field.value = (min(Window.width, Window.height)) / 10f
+            field.value = if (Window.height < Window.width) {
+                (Window.height - 32f) / ROWS
+            } else {
+                (Window.width - 32f) / COLUMNS
+            }
             return field
         }
 
